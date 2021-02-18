@@ -1,4 +1,4 @@
-# MySQL-Express-React-Node-App-Login-Register-
+# MySQL-Express-React-Node-Login-Register
 User Login Register with React front-end and Node and MySQL REST API back-end
 
 # Features
