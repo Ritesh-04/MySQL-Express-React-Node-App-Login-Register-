@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import formValidation from './../common/form-validation'
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -7,11 +8,12 @@ const SignIn = () => {
     const history = useHistory();
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        
         let formData = {
             'email': email,
             'password': password
         }
+        if(formValidation(formData)){
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -20,11 +22,16 @@ const SignIn = () => {
         fetch('http://localhost:3033/signin', requestOptions)
             .then(response => response.json())
             .then(data => {
-                history.push('/home');
-                sessionStorage.setItem('token', data.token);
-                sessionStorage.setItem('name', data.name);
-                sessionStorage.setItem('email', data.email);
+                if(data.message){
+                    alert("Please try again");
+                } else {
+                    history.push('/home');
+                    sessionStorage.setItem('token', data.token);
+                    sessionStorage.setItem('name', data.name);
+                    sessionStorage.setItem('email', data.email);
+                }
             })
+        }
     }
     return (
         <div className="d-flex justify-content-center align-items-center login-container">
